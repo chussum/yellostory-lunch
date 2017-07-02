@@ -43,7 +43,7 @@
     "moment": "^2.18.1",
     "next": "^2.4.6",
     "next-connect-redux": "^0.1.5",
-    "node-sass": "^4.5.2",
+    "node-sass": "4.5.2",
     "normalize.css": "^6.0.0",
     "nprogress": "^0.2.0",
     "postcss-easy-import": "^2.0.0",
@@ -58,9 +58,6 @@
     "sass-loader": "^6.0.3"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.24.1",
     "nodemon": "^1.11.0",
-    "webpack": "^3.0.0"
   }
 }
