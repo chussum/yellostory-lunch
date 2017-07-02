@@ -1,0 +1,8 @@
+yarn.lock
+npm-debug.log
+node_modules
+config.json
+
+.next
+.idea
+.DS_STORE

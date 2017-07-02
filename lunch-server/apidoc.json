@@ -1,0 +1,9 @@
+{
+    "name": "eatmore API",
+    "version": "0.0.0",
+    "title": "맛집 콕콕 서비스 꿀꿀이 API",
+    "template": {
+        "withCompare": false,
+        "withGenerator": true
+    }
+}

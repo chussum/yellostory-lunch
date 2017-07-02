@@ -1,0 +1,17 @@
+.login-form {
+    .login-form-button {
+        display: block;
+        width: 100%;
+    }
+
+    .login-form-forgot {
+        float: right;
+        span:last-child:before {
+            content: ' | '
+        }
+    }
+
+    .ant-form-item:last-child {
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "presets": [
+        "next/babel",
+        "stage-0"
+    ],
+    "plugins": [
+        [
+            // require module alias
+            "module-resolver", {
+                "root": ["."],
+                "alias": {
+                    "styles": "./styles",
+                    "next/connect": "./next.connect.js"
+                },
+                "cwd": "babelrc"
+            }
+        ], [
+            "wrap-in-js", {
+                "extensions": ["css$", "scss$"]
+            }
+        ],
+        "transform-decorators-legacy",  // @decorators
+        "transform-class-properties",   // class { handleClick = () => { } }
+        "transform-object-rest-spread", // { ...todo, completed: true }
+        [
+            // function* () { yield 42; yield 43; }
+            "transform-regenerator", {
+                // Async functions are converted to generators by babel-preset-latest
+                "async": false
+            }
+        ], [
+            // Polyfills the runtime needed for async/await and generators
+            "transform-runtime", {
+                "helpers": false,
+                "polyfill": false,
+                "regenerator": true
+            }
+        ]
+    ],
+    "ignore": []
+}

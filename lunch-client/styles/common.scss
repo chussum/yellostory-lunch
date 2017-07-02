@@ -1,0 +1,65 @@
+@import 'font';
+
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif' !important;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+body {
+    height: 100%;
+
+    > div:first-child {
+        height: 100%;
+
+        .layout,
+        > #__next,
+        > #__next > div,
+        > #__next > div > div {
+            height: 100%;
+        }
+    }
+}
+
+.container {
+    margin: 0 auto;
+    padding: 10px 0;
+    max-width: 1080px;
+}
+
+.ant-back-top {
+    right: 30px;
+    bottom: 30px;
+    .ant-back-top-content {
+        background-color: #000; //#1CB9D0;
+    }
+}
+
+.ant-card:hover {
+    box-shadow: none;
+}
+
+@media (max-width: 400px) {
+    .ant-form-item {
+        margin-bottom: 10px;
+
+        .ant-form-item-label {
+            padding: 0;
+        }
+    }
+}
+
+.custom-image img {
+    display: block;
+}
+.custom-card {
+    padding: 10px;
+}
+.custom-card p {
+    color: #999;
+}

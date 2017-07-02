@@ -1,0 +1,82 @@
+.header {
+    $height: 50px;
+
+    height: $height;
+    line-height: $height;
+    margin-bottom: 10px;
+
+    .gnb {
+        $border-color: #e6e6e6;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #fff;
+        border-bottom: 1px solid $border-color;
+        z-index: 1000;
+
+        div {
+            margin: 0 auto;
+            max-width: 1080px;
+        }
+
+        h1 {
+            display: inline;
+
+            .logo {
+                width: 38px;
+                vertical-align: middle;
+            }
+        }
+
+        ul.nav {
+            display: inline;
+            margin: 0 10px;
+
+            li {
+                display: inline;
+            }
+
+            a {
+                $border-color: #000;
+
+                margin: 0 6px;
+                padding: 4px 8px;
+                position: relative;
+                display: inline-block;
+                text-align: center;
+                font-size: 14px;
+                line-height: 40px;
+                font-weight: 600;
+                color: #000;
+                text-decoration: none;
+
+
+                &:hover {
+                    color: #000; //#1CB9D0;
+                }
+
+                &.active {
+                    color: $border-color;
+                    border-bottom: 2px solid #000;
+                }
+            }
+        }
+
+        .welcome {
+            font-size: 14px;
+            strong {
+                font-weight: bold;
+            }
+        }
+
+        .right {
+            float: right;
+        }
+
+        .logout {
+            margin: 0 10px;
+        }
+    }
+}
