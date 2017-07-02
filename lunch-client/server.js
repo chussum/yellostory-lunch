@@ -1,4 +1,4 @@
-const config = require('./config')
+const config = require('./config.json')
 const httpProxy = require('http-proxy')
 const express = require('express')
 const next = require('next')
@@ -59,11 +59,8 @@ app.prepare()
                 req.cookies && req.cookies.token && proxyReq.setHeader('Authorization', req.cookies.token)
             }
         })
-        proxy.on('error', function (err, req, res) {
-            res.writeHead(500, {
-                'Content-Type': 'text/plain'
-            })
-            res.end('Something went wrong.');
+        proxy.on('error', (err, req, res) => {
+            res.status(500).end('Something went wrong.');
         })
         server.use('/api', (req, res) => proxy.web(req, res))
 
