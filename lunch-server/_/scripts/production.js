@@ -1,4 +1,4 @@
 process.env.NODE_ENV = 'production'
 
 require('babel-register')
-require('../build/app')
+require('../build/server')

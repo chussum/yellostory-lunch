@@ -10,7 +10,7 @@
     "dev": "yarn run start:dev",
     "start": "yarn run start:dev",
     "start:dev": "yarn install && yarn run clean && yarn apidoc && node _/scripts/development.js",
-    "start:prod": "yarn run build && yarn apidoc && pm2 start _/scripts/production.js --name 'lunch-backend' -i 2",
+    "start:prod": "yarn run build && yarn apidoc && pm2 start _/scripts/production.js --name 'lunch-backend'",
     "reload": "yarn run build && pm2 reload lunch-backend",
     "stop": "pm2 stop lunch-backend && pm2 delete lunch-backend",
     "test": "yarn build && ./node_modules/.bin/mocha --compilers js:babel-register --require babel-polyfill --recursive app/**/*.spec.js"
