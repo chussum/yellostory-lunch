@@ -2,6 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    @media (max-width: 400px) {
+        border-top: 1px solid #ddd;
+    }
 }
 
 .Calendar-header {
@@ -12,7 +15,7 @@
     text-align: center;
     line-height: 30px;
     @media (max-width: 400px) {
-        font-size: 13px;
+        font-size: 14px;
     }
 }
 
@@ -89,6 +92,9 @@
 .Calendar-grid-item.nextMonth,
 .Calendar-grid-item.prevMonth {
     color: #999;
+    @media (max-width: 400px) {
+        display: none;
+    }
 }
 
 .Calendar-grid-item:nth-child(7n+1) {
@@ -102,9 +108,7 @@
 
 @media (max-width: 400px) {
     .Calendar-grid-item {
-        border-top: 1px solid #ddd;
         border-left: 1px solid #ddd;
-        border-bottom: 0;
         .foods {
             min-height: 40px;
         }
@@ -117,8 +121,5 @@
                 left: 26px;
             }
         }
-    }
-    .Calendar-grid-item:last-child {
-        border-bottom: 1px solid #ddd;
     }
 }
