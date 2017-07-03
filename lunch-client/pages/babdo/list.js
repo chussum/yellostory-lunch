@@ -13,6 +13,7 @@ const confirm = Modal.confirm
 
 @nextConnect((state) => state)
 class BabdoList extends Page {
+    week = ['일', '월', '화', '수', '목', '금', '토']
     state = {
         category: '밥도',
         date: moment(),
@@ -132,7 +133,7 @@ class BabdoList extends Page {
                                     fontWeight: date.isSame(moment(), 'day') ? 700 : 400,
                                     fontSize: date.isSame(moment(), 'day') ? 22 : 16,
                                 }}>
-                                    { date.format('D') }
+                                    { date.format('D') } <strong>{ this.week[date.format('d')] }</strong>
                                 </span>
                                 <div className="foods" onClick={ () => this.showFoodsModal(date) }>
                                     { items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods.split('\n').map((item, key) => {

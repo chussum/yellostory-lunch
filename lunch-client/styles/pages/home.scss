@@ -83,4 +83,14 @@
             width: 90% !important;
         }
     }
+
+    ul {
+        li {
+            padding: 2px 0;
+            font-size: 14px;
+            @media (max-width: 400px) {
+                font-size: 13px;
+            }
+        }
+    }
 }

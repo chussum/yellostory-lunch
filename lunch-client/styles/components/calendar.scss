@@ -11,11 +11,14 @@
     color: #000;
     text-align: center;
     line-height: 30px;
+    @media (max-width: 400px) {
+        font-size: 13px;
+    }
 }
 
 .Calendar-header button {
     position: absolute;
-    top: 0px;
+    top: 0;
     min-width: 40px;
 
     &.Calendar-header-left {
@@ -23,11 +26,22 @@
     }
     &.Calendar-header-today {
         right: 50px;
+        @media (max-width: 320px) {
+            display: none;
+        }
     }
     &.Calendar-header-right {
         right: 0;
     }
 
+    @media (max-width: 400px) {
+        min-width: 30px;
+        padding: 0;
+        &.Calendar-header-today {
+            right: 34px;
+            padding: 0 8px;
+        }
+    }
 }
 
 .Calendar-grid-item {
@@ -40,16 +54,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @media (max-width: 400px) {
+        flex: 0 100%;
+    }
     &.title {
         height: 20px;
         background: #efefef;
         font-weight: 800;
         font-size: 14px;
+        @media (max-width: 400px) {
+            display: none;
+        }
     }
     .day {
         position: absolute;
         top: 10px;
         left: 10px;
+        strong {
+            display: none;
+        }
     }
     .foods {
         padding-top: 20px;
@@ -74,4 +97,28 @@
 
 .Calendar-grid-item:nth-child(-n+7) {
     border-top: 1px solid #ddd;
+}
+
+
+@media (max-width: 400px) {
+    .Calendar-grid-item {
+        border-top: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-bottom: 0;
+        .foods {
+            min-height: 40px;
+        }
+        .day {
+            strong {
+                display: inline;
+                position: absolute;
+                font-weight: 800;
+                top: 0;
+                left: 26px;
+            }
+        }
+    }
+    .Calendar-grid-item:last-child {
+        border-bottom: 1px solid #ddd;
+    }
 }

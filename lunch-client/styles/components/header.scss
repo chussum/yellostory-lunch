@@ -16,8 +16,9 @@
         border-bottom: 1px solid $border-color;
         z-index: 1000;
 
-        div {
+        > div {
             margin: 0 auto;
+            padding: 0 10px;
             max-width: 1080px;
         }
 
@@ -27,6 +28,9 @@
             .logo {
                 width: 38px;
                 vertical-align: middle;
+                @media (max-width: 320px) {
+                    width: 26px;
+                }
             }
         }
 
@@ -61,6 +65,11 @@
                     color: $border-color;
                     border-bottom: 2px solid #000;
                 }
+
+                @media (max-width: 320px) {
+                    padding: 4px 0;
+                    font-size: 12px;
+                }
             }
         }
 
@@ -69,10 +78,25 @@
             strong {
                 font-weight: bold;
             }
+            @media (max-width: 400px) {
+                display: none;
+            }
+        }
+
+        .ant-input-affix-wrapper {
+            @media (max-width: 400px) {
+                display: none;
+            }
         }
 
         .right {
             float: right;
+            @media (max-width: 400px) {
+                float: none;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
         }
 
         .logout {
