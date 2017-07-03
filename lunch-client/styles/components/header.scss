@@ -55,17 +55,14 @@
                 font-weight: 600;
                 color: #000;
                 text-decoration: none;
-
-
                 &:hover {
-                    color: #000; //#1CB9D0;
+                    color: #000;
                 }
 
                 &.active {
                     color: $border-color;
                     border-bottom: 2px solid #000;
                 }
-
                 @media (max-width: 320px) {
                     padding: 4px 0;
                     font-size: 12px;
@@ -78,20 +75,20 @@
             strong {
                 font-weight: bold;
             }
-            @media (max-width: 400px) {
+            @media (max-width: 720px) {
                 display: none;
             }
         }
 
         .ant-input-affix-wrapper {
-            @media (max-width: 400px) {
+            @media (max-width: 720px) {
                 display: none;
             }
         }
 
         .right {
             float: right;
-            @media (max-width: 400px) {
+            @media (max-width: 720px) {
                 float: none;
                 position: absolute;
                 right: 0;
