@@ -1,5 +1,5 @@
 # 간단 식단표 관리
-https://lunch.hyungdew.com
+http://lunch.hyungdew.com
 
 ### Prerequisites
 
