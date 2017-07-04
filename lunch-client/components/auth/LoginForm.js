@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
 import autobind from 'autobind-decorator'
 import { Form, Icon, Input, Button, Checkbox, notification } from 'antd'
 import { nextConnect } from 'next/connect'
@@ -30,7 +31,7 @@ class LoginForm extends React.Component {
 
                 setFields(fieldError)
             } else {
-                document.location.href = '/'
+                Router.push('/')
             }
         });
     }
