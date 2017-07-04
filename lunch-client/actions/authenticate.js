@@ -3,7 +3,9 @@ import { redirect } from 'helper/redirect'
 import { READY, AUTH_USER, AUTH_ERROR, UNAUTH_USER } from 'constants/ActionTypes'
 
 const requiredLoginPathname = [
+    '/babdo',
     '/babdo/list',
+    '/woori-food',
     '/woori-food/list',
 ]
 
@@ -45,7 +47,7 @@ export const validateToken = (token, { pathname, res } = {}) => async dispatch =
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
         if (requiredLoginPathname.includes(pathname)) {
-            redirect('/login', res)
+            redirect('/', res)
         }
     }
 }
@@ -80,7 +82,10 @@ export const logoutUser = () => async dispatch => {
     try {
         await axios.get('/auth/logout')
         await dispatch({type: UNAUTH_USER})
-        document.location.href = '/'
+        let pathname = document && document.location && document.location.pathname.replace(/\/$/g,'')
+        if (requiredLoginPathname.includes(pathname)) {
+            document.location.href = '/'
+        }
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
     }
