@@ -54,7 +54,7 @@ const kakaoAPIFormat = (lunch) => {
     }
     let foods = split(lunch.foods, '\n')
     let date = moment(lunch.date)
-    let subject = `${date.format('M월 D일')} (${week[date.format('d')]}) 점심 / ${lunch.category}`
+    let subject = `${date.format('M월 D일')} (${week[date.format('d')]}) / ${lunch.category}`
     return subject + '\n\n' + join(filter(foods, (title) => title.trim() != ''), '\n')
 }
 
