@@ -22,8 +22,8 @@ class BabdoList extends Page {
         foods: '',
     }
 
-    static async getInitialProps({ req, query }) {
-        await super.getInitialProps({ req })
+    static async getInitialProps(ctx) {
+        await super.getInitialProps(ctx)
         let foods = {}
         try {
             let response = await axios.get('/lunches', {

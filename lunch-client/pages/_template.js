@@ -5,8 +5,8 @@ import { nextConnect } from 'next/connect'
 
 @nextConnect((state) => state)
 class Template extends Page {
-    static async getInitialProps({ req }) {
-        await super.getInitialProps({ req })
+    static async getInitialProps(ctx) {
+        await super.getInitialProps(ctx)
         return {}
     }
 

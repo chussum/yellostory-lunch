@@ -15,9 +15,9 @@ Router.onRouteChangeError = () => NProgress.done()
 
 @nextConnect((state) => state)
 class Page extends React.Component {
-    static async getInitialProps({ req, store }) {
+    static async getInitialProps({ req, res, pathname, store }) {
         let token = req && req.cookies && req.cookies.token
-        await store.dispatch(validateToken({ token }))
+        await store.dispatch(validateToken(token, { pathname, res }))
         return {}
     }
 }

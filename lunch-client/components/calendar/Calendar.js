@@ -21,28 +21,28 @@ export default class Calendar extends React.Component {
         onChangeMonth: PropTypes.func,
         /** Called when a date is clicked */
         onPickDate: PropTypes.func
-    };
+    }
 
     static defaultProps = {
         weekOffset: 0,
         renderDay: day => day.format('YYYY-MM-D')
-    };
+    }
 
     handleNextMonth = () => {
         if (this.props.onNextMonth) {
-            return this.props.onNextMonth();
+            return this.props.onNextMonth()
         }
 
-        this.props.onChangeMonth(this.props.date.clone().add(1, 'months'));
-    };
+        this.props.onChangeMonth(this.props.date.clone().add(1, 'months'))
+    }
 
     handlePrevMonth = () => {
         if (this.props.onPrevMonth) {
-            return this.props.onPrevMonth();
+            return this.props.onPrevMonth()
         }
 
-        this.props.onChangeMonth(this.props.date.clone().subtract(1, 'months'));
-    };
+        this.props.onChangeMonth(this.props.date.clone().subtract(1, 'months'))
+    }
 
     handleTodayMonth = () => {
         this.props.onChangeMonth(moment());
@@ -57,31 +57,31 @@ export default class Calendar extends React.Component {
             onPrevMonth,
             onPickDate,
             onChange
-        } = this.props;
+        } = this.props
 
         return (
-            <div className="Calendar">
-                <div className="Calendar-header">
-                    <Button className="Calendar-header-left" onClick={this.handlePrevMonth}>«</Button>
-                    <div className="Calendar-header-currentDate">
+            <div className="calendar">
+                <div className="calendar-header">
+                    <Button className="calendar-header-left" onClick={this.handlePrevMonth}>«</Button>
+                    <div className="calendar-header-currentDate">
                         { this.props.title && this.props.title + ' ' } {date.format('MMMM 식단표 (YYYY년도)') }
                     </div>
-                    <Button className="Calendar-header-today" onClick={ this.handleTodayMonth }>오늘</Button>
-                    <Button className="Calendar-header-right" onClick={ this.handleNextMonth }>»</Button>
+                    <Button className="calendar-header-today" onClick={ this.handleTodayMonth }>오늘</Button>
+                    <Button className="calendar-header-right" onClick={ this.handleNextMonth }>»</Button>
                 </div>
-                <div className="Calendar-grid">
-                    <div className="Calendar-grid-item title">일</div>
-                    <div className="Calendar-grid-item title">월</div>
-                    <div className="Calendar-grid-item title">화</div>
-                    <div className="Calendar-grid-item title">수</div>
-                    <div className="Calendar-grid-item title">목</div>
-                    <div className="Calendar-grid-item title">금</div>
-                    <div className="Calendar-grid-item title">토</div>
+                <div className="calendar-grid">
+                    <div className="calendar-grid-item title">일</div>
+                    <div className="calendar-grid-item title">월</div>
+                    <div className="calendar-grid-item title">화</div>
+                    <div className="calendar-grid-item title">수</div>
+                    <div className="calendar-grid-item title">목</div>
+                    <div className="calendar-grid-item title">금</div>
+                    <div className="calendar-grid-item title">토</div>
 
                     {createDateObjects(date, weekOffset).map((day, i) => (
                         <div
                             key={`day-${i}`}
-                            className={`Calendar-grid-item ${day.classNames || ''}`}
+                            className={`calendar-grid-item ${day.classNames || ''}`}
                             onClick={e => onPickDate(day.day)}
                         >
                             {renderDay(day.day)}
@@ -89,6 +89,6 @@ export default class Calendar extends React.Component {
                     ))}
                 </div>
             </div>
-        );
+        )
     }
 }

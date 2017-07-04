@@ -19,7 +19,6 @@ class LoginForm extends React.Component {
 
             await dispatch(loginUser(values))
             let { authenticate } = this.props
-
             if (authenticate.error) {
                 let fieldError = {}
                 fieldError[authenticate.error.code] = {
@@ -30,6 +29,8 @@ class LoginForm extends React.Component {
                 }
 
                 setFields(fieldError)
+            } else {
+                document.location.href = '/'
             }
         });
     }

@@ -7,8 +7,8 @@ import moment from 'moment'
 
 @nextConnect((state) => state)
 class Index extends Page {
-    static async getInitialProps ({ req, res }) {
-        await super.getInitialProps({ req })
+    static async getInitialProps(ctx) {
+        await super.getInitialProps(ctx)
         let today, tomorrow
         try {
             let todayResponse = await axios.get('/lunch/today')

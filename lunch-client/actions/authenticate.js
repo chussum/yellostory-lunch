@@ -1,5 +1,11 @@
 import axios from 'axios'
+import { redirect } from 'helper/redirect'
 import { READY, AUTH_USER, AUTH_ERROR, UNAUTH_USER } from 'constants/ActionTypes'
+
+const requiredLoginPathname = [
+    '/babdo/list',
+    '/woori-food/list',
+]
 
 export const errorHandler = async (dispatch, error, type) => {
     let errorMessage
@@ -29,7 +35,7 @@ export const errorHandler = async (dispatch, error, type) => {
     }
 }
 
-export const validateToken = ({ token }) => async dispatch => {
+export const validateToken = (token, { pathname, res } = {}) => async dispatch => {
     try {
         let response = await axios.post('/auth/token', { token })
         await dispatch({
@@ -38,6 +44,9 @@ export const validateToken = ({ token }) => async dispatch => {
         })
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
+        if (requiredLoginPathname.includes(pathname)) {
+            redirect('/login', res)
+        }
     }
 }
 
@@ -48,7 +57,7 @@ export const loginUser = ({email, password, remember}) => async dispatch => {
         let response = await axios.post('/auth/login', { email, password, remember })
         let token = response.data.token
 
-        await dispatch(validateToken({ token }))
+        await dispatch(validateToken(token))
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
     }
@@ -71,6 +80,7 @@ export const logoutUser = () => async dispatch => {
     try {
         await axios.get('/auth/logout')
         await dispatch({type: UNAUTH_USER})
+        redirect('/')
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
     }

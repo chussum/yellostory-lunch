@@ -59,12 +59,6 @@ class Header extends React.Component {
                             <Button className="logout" onClick={ this.logout }>
                                 로그아웃
                             </Button>
-
-                            <Search
-                                placeholder="검색"
-                                style={{ width: 200 }}
-                                onSearch={value => alert('준비중')}
-                            />
                         </div>
                     </div>
                 </div>

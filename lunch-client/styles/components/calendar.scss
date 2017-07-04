@@ -1,4 +1,4 @@
-.Calendar-grid {
+.calendar-grid {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -7,7 +7,7 @@
     }
 }
 
-.Calendar-header {
+.calendar-header {
     position: relative;
     height: 50px;
     background: #fff;
@@ -19,35 +19,35 @@
     }
 }
 
-.Calendar-header button {
+.calendar-header button {
     position: absolute;
     top: 0;
     min-width: 40px;
 
-    &.Calendar-header-left {
+    &.calendar-header-left {
         left: 0;
     }
-    &.Calendar-header-today {
+    &.calendar-header-today {
         right: 50px;
         @media (max-width: 320px) {
             display: none;
         }
     }
-    &.Calendar-header-right {
+    &.calendar-header-right {
         right: 0;
     }
 
     @media (max-width: 400px) {
         min-width: 30px;
         padding: 0;
-        &.Calendar-header-today {
+        &.calendar-header-today {
             right: 34px;
             padding: 0 8px;
         }
     }
 }
 
-.Calendar-grid-item {
+.calendar-grid-item {
     position: relative;
     flex: 0 14.28571%;
     text-align: center;
@@ -89,25 +89,25 @@
     }
 }
 
-.Calendar-grid-item.nextMonth,
-.Calendar-grid-item.prevMonth {
+.calendar-grid-item.nextMonth,
+.calendar-grid-item.prevMonth {
     color: #999;
     @media (max-width: 400px) {
         display: none;
     }
 }
 
-.Calendar-grid-item:nth-child(7n+1) {
+.calendar-grid-item:nth-child(7n+1) {
     border-left: 1px solid #ddd;
 }
 
-.Calendar-grid-item:nth-child(-n+7) {
+.calendar-grid-item:nth-child(-n+7) {
     border-top: 1px solid #ddd;
 }
 
 
 @media (max-width: 400px) {
-    .Calendar-grid-item {
+    .calendar-grid-item {
         border-left: 1px solid #ddd;
         .foods {
             min-height: 40px;

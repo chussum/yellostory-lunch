@@ -19,26 +19,8 @@ if (process.env.NODE_ENV === 'production') {
 
 @nextConnect((state) => state)
 class Layout extends React.Component {
-    componentDidMount() {
-        // this.redirect()
-    }
-
-    componentDidUpdate() {
-        // this.redirect()
-    }
-
-    redirect() {
-        let { publicPage, pathname, authenticate: { authenticated } }  = this.props
-
-        if (!publicPage && !authenticated && pathname !== '/login') {
-            document && (document.location.href = '/login')
-        } else if (authenticated && pathname === '/login') {
-            document && (document.location.href = '/')
-        }
-    }
-
     render() {
-        let { publicPage, className, title, pathname, authenticate, authenticate: { content, authenticated } }  = this.props
+        let { publicPage, className, title, pathname, authenticate: { content, authenticated } }  = this.props
         let layout
 
         if (publicPage || authenticated && content) {
