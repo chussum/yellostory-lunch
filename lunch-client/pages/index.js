@@ -7,6 +7,8 @@ import moment from 'moment'
 
 @nextConnect((state) => state)
 class Index extends Page {
+    week = ['일', '월', '화', '수', '목', '금', '토']
+
     static async getInitialProps(ctx) {
         await super.getInitialProps(ctx)
         let today, tomorrow
@@ -30,7 +32,7 @@ class Index extends Page {
             let date = moment(today.date)
             todayJSX = (
                 <div className="menu">
-                    <h2>{date.format('M월 D일')} 오늘의 점심 메뉴 / {today.category}</h2>
+                    <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 오늘의 점심 / {today.category}</h2>
                     <ul>
                     { today.foods.split('\n').map((item, key) => {
                         if (!item) return
@@ -43,7 +45,7 @@ class Index extends Page {
             let date = moment()
             todayJSX = (
                 <div className="menu">
-                    <h2>{date.format('M월 D일')} 오늘의 점심 메뉴</h2>
+                    <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 오늘의 점심</h2>
                     <span>식단표가 없습니다.</span>
                 </div>
             )
@@ -52,7 +54,7 @@ class Index extends Page {
             let date = moment(tomorrow.date)
             tomorrowJSX = (
                 <div className="menu">
-                    <h2>{date.format('M월 D일')} 내일의 점심 메뉴 / {tomorrow.category}</h2>
+                    <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 내일의 점심 / {tomorrow.category}</h2>
                     <ul>
                     { tomorrow.foods.split('\n').map((item, key) => {
                         if (!item) return
@@ -65,7 +67,7 @@ class Index extends Page {
             let date = moment().add(1, 'days')
             tomorrowJSX = (
                 <div className="menu">
-                    <h2>{date.format('M월 D일')} 내일의 점심 메뉴</h2>
+                    <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 내일의 점심</h2>
                     <span>식단표가 없습니다.</span>
                 </div>
             )
@@ -75,6 +77,11 @@ class Index extends Page {
                 <div className="container">
                     { todayJSX }
                     { tomorrowJSX }
+                    <div className="menu">
+                        <strong>금요일 점심은 격주로 시행됩니다.</strong><br/><br/>
+                        - 우리푸드: 짝수달 금요일<br/>
+                        - 밥도: 홀수달 금요일
+                    </div>
                 </div>
             </Layout>
         )

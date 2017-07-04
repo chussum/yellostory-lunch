@@ -13,6 +13,8 @@ router.post('/user', authenticate.auth, user.create)
 router.get('/lunches', lunch.get)
 router.get('/lunch/today', lunch.getTodayLunch)
 router.get('/lunch/tomorrow', lunch.getTomorrowLunch)
+router.get('/lunch/keyboard', lunch.getKeyboard)
+router.post('/lunch/message', lunch.getMessage)
 router.post('/lunch', authenticate.auth, lunch.create)
 router.delete('/lunch', authenticate.auth, lunch.remove)
 

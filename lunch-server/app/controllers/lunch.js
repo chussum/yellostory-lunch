@@ -1,10 +1,65 @@
 import Lunch from '../models/Lunch'
 import moment from 'moment'
+import { filter, split, join } from 'lodash'
 
 const dateRegex = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/
+const findTodayLunch = async () => {
+    let today = moment()
+    let day = Number(today.day())
+    let category
+
+    if ([1, 3].includes(day)) {
+        category = '우리푸드'
+    } else if ([2, 4].includes(day)) {
+        category = '밥도'
+    } else if (day === 5) {
+        switch (Number(today.format('M') % 2)) {
+            case 0:
+                category = '우리푸드'
+                break
+            case 1:
+                category = '밥도'
+                break
+        }
+    }
+
+    return await Lunch.findLunch(category, today)
+}
+const findTomorrowLunch = async () => {
+    let tomorrow = moment().add(1, 'days')
+    let day = Number(tomorrow.day())
+    let category
+
+    if ([1, 3].includes(day)) {
+        category = '우리푸드'
+    } else if ([2, 4].includes(day)) {
+        category = '밥도'
+    } else if (day === 5) {
+        switch (Number(tomorrow.format('M') % 2)) {
+            case 0:
+                category = '우리푸드'
+                break
+            case 1:
+                category = '밥도'
+                break
+        }
+    }
+
+    return await Lunch.findLunch(category, tomorrow)
+}
+const week = ['일', '월', '화', '수', '목', '금', '토']
+const kakaoAPIFormat = (lunch) => {
+    if (!lunch) {
+        return
+    }
+    let foods = split(lunch.foods, '\n')
+    let date = moment(lunch.date)
+    let subject = `${date.format('M월 D일')} (${week[date.format('d')]}) 점심 / ${lunch.category}`
+    return subject + '\n\n' + join(filter(foods, (title) => title.trim() != ''), '\n')
+}
 
 /**
- * @api {get} /lunch LunchList
+ * @api {get} /lunch 식단표 목록
  * @apiGroup Lunch
  */
 export const get = async (req, res) => {
@@ -31,66 +86,75 @@ export const get = async (req, res) => {
 /**
  * - 우리푸드 : 짝수달 금요일, 월,수 (1,3)
  * - 밥도 : 홀수달 금요일, 화,목 (2,4)
- *
  */
 /**
- * @api {get} /lunch/today LunchList
+ * @api {get} /lunch/today 오늘의 점심
  * @apiGroup Lunch
  */
 export const getTodayLunch = async (req, res) => {
-    let today = moment()
-    let day = Number(today.day())
-    let category
-
-    if ([1, 3].includes(day)) {
-        category = '우리푸드'
-    } else if ([2, 4].includes(day)) {
-        category = '밥도'
-    } else if (day === 5) {
-        switch (Number(today.format('M') % 2)) {
-            case 0:
-                category = '우리푸드'
-                break
-            case 1:
-                category = '밥도'
-                break
-        }
-    }
-
-    let lunch = await Lunch.findLunch(category, today)
+    let lunch = await findTodayLunch()
     res.json(lunch)
 }
 
 /**
- * @api {get} /lunch/tomorrow LunchList
+ * @api {get} /lunch/tomorrow 내일의 점심
  * @apiGroup Lunch
  */
 export const getTomorrowLunch = async (req, res) => {
-    let tomorrow = moment().add(1, 'days')
-    let day = Number(tomorrow.day())
-    let category
-
-    if ([1, 3].includes(day)) {
-        category = '우리푸드'
-    } else if ([2, 4].includes(day)) {
-        category = '밥도'
-    } else if (day === 5) {
-        switch (Number(tomorrow.format('M') % 2)) {
-            case 0:
-                category = '우리푸드'
-                break
-            case 1:
-                category = '밥도'
-                break
-        }
-    }
-
-    let lunch = await Lunch.findLunch(category, tomorrow)
+    let lunch = await findTomorrowLunch()
     res.json(lunch)
 }
 
 /**
- * @api {post} /lunch create
+ * @api {get} /lunch/keyboard 카카오톡 API, KEYBOARD
+ * @apiGroup Lunch
+ */
+export const getKeyboard = async (req, res) => {
+    res.json({
+        type: 'buttons',
+        buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
+    })
+}
+
+/**
+ * @api {get} /lunch/message 카카오톡 API, MESSAGE
+ * @apiGroup Lunch
+ */
+export const getMessage = async (req, res) => {
+    let content = req.body.content
+    let lunch, text, message_button
+    switch (content) {
+        case '오늘의 점심 메뉴': {
+            lunch = await findTodayLunch()
+            break;
+        }
+        case '내일 점심은 뭐지?': {
+            lunch = await findTomorrowLunch()
+            break;
+        }
+    }
+    lunch && (text = kakaoAPIFormat(lunch))
+    if (!text) {
+        text = '식단표가 없어요!\n식단표 등록에 힘이 되어주세요!'
+        message_button = {
+            label: '식단표 등록해주러 가기',
+            url: 'http://lunch.hyungdew.com',
+        }
+    }
+    res.json({
+        message: {
+            text,
+            message_button,
+        },
+        keyboard: {
+            type: 'buttons',
+            buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
+        },
+    })
+}
+
+/**
+ * @api {post} /lunch 점심메뉴 등록/수정
  * @apiGroup Lunch
  */
 export const create = async (req, res) => {
@@ -127,7 +191,7 @@ export const create = async (req, res) => {
 
 
 /**
- * @api {delete} /lunch delete
+ * @api {delete} /lunch 점심메뉴 삭제
  * @apiGroup Lunch
  */
 export const remove = async (req, res) => {

@@ -1,7 +1,7 @@
 {
-    "name": "eatmore API",
+    "name": "런치 API",
     "version": "0.0.0",
-    "title": "맛집 콕콕 서비스 꿀꿀이 API",
+    "title": "간단 식단표",
     "template": {
         "withCompare": false,
         "withGenerator": true
