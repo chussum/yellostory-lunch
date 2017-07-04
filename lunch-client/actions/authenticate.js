@@ -80,7 +80,7 @@ export const logoutUser = () => async dispatch => {
     try {
         await axios.get('/auth/logout')
         await dispatch({type: UNAUTH_USER})
-        redirect('/')
+        document.location.href = '/'
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
     }
