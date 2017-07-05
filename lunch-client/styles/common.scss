@@ -4,14 +4,13 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif';
-    font-weight: 300;
     margin: 0;
     padding: 0;
     outline: 0;
 }
 
 body {
+    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif';
     height: 100%;
 
     > div:first-child {
