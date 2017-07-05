@@ -1,6 +1,6 @@
 {
   "name": "lunch-client",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "iamdew <iam@hyungdew.com>",
   "license": "MIT",
   "scripts": {
@@ -40,7 +40,7 @@
     "less": "2.7.2",
     "lodash": "4.17.4",
     "moment": "2.18.1",
-    "next": "2.4.6",
+    "next": "latest",
     "next-connect-redux": "0.1.5",
     "node-sass": "4.5.2",
     "normalize.css": "6.0.0",
