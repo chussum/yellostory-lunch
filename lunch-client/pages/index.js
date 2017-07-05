@@ -75,12 +75,16 @@ class Index extends Page {
         return (
             <Layout className="home" pathname={ url.pathname }>
                 <div className="container">
-                    { todayJSX }
-                    { tomorrowJSX }
-                    <div className="menu">
-                        <strong>금요일 점심은 격주로 시행됩니다.</strong><br/><br/>
-                        - 우리푸드: 짝수달 금요일<br/>
-                        - 밥도: 홀수달 금요일
+                    <div>
+                        { todayJSX }
+                        { tomorrowJSX }
+                    </div>
+                    <div className="description">
+                        <h2>금요일 점심은 격월로 시행됩니다.</h2>
+                        <ul>
+                            <li>- 우리푸드: 2, 4, 6, 8, 10, 12월</li>
+                            <li>- 밥도: 1, 3, 5, 7, 9, 11월</li>
+                        </ul>
                     </div>
                 </div>
             </Layout>

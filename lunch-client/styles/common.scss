@@ -4,7 +4,7 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif' !important;
+    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif';
     font-weight: 300;
     margin: 0;
     padding: 0;
@@ -26,7 +26,15 @@ body {
     }
 }
 
+.jua {
+    font-family: 'BM JUA', '배달의민족 주아', sans-serif;
+}
+.hana {
+    font-family: 'BM HANNA', '배달의민족 한나', sans-serif;
+}
+
 .container {
+    position: relative;
     margin: 0 auto;
     padding: 10px;
     max-width: 1080px;

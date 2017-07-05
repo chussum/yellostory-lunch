@@ -57,6 +57,10 @@ const kakaoAPIFormat = (lunch) => {
     let subject = `${date.format('M월 D일')} (${week[date.format('d')]}) / ${lunch.category}`
     return subject + '\n\n' + join(filter(foods, (title) => title.trim() != ''), '\n')
 }
+const kakaoKeyboard = {
+    type: 'buttons',
+    buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
+}
 
 /**
  * @api {get} /lunch 식단표 목록
@@ -110,10 +114,7 @@ export const getTomorrowLunch = async (req, res) => {
  * @apiGroup Lunch
  */
 export const getKeyboard = async (req, res) => {
-    res.json({
-        type: 'buttons',
-        buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
-    })
+    res.json(kakaoKeyboard)
 }
 
 /**
@@ -137,7 +138,7 @@ export const getMessage = async (req, res) => {
     if (!text) {
         text = '식단표가 없어요!\n식단표 등록에 힘이 되어주세요!'
         message_button = {
-            label: '식단표 등록해주러 가기',
+            label: '식단표 등록해주기',
             url: 'http://lunch.hyungdew.com',
         }
     }
@@ -146,10 +147,7 @@ export const getMessage = async (req, res) => {
             text,
             message_button,
         },
-        keyboard: {
-            type: 'buttons',
-            buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
-        },
+        keyboard: kakaoKeyboard,
     })
 }
 

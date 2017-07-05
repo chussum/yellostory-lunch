@@ -16,7 +16,7 @@ class Register extends Page {
         let { url } = this.props
         return (
             <Layout className="home" title="회원가입" pathname={ url.pathname } publicPage={ true } hideHeader={ true }>
-                <div className="bg-cafe">
+                <div className="bg-pasta">
                     <div className="overlay"></div>
                     <div className="hello register">
                         <Card bordered={false}>

@@ -35,7 +35,7 @@ class Layout extends React.Component {
         } else {
             layout = (
                 <div className="home">
-                    <div className="bg-cafe">
+                    <div className="bg-pasta">
                         <div className="overlay"></div>
                         <div className="hello">
                             <Card bordered={false}>
