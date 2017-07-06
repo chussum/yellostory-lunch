@@ -42,16 +42,16 @@
     .menu {
         margin: 10px 0 30px 0;
         h2 {
-            font-family: 'BM HANNA', '배달의민족 한나', sans-serif;
+            //font-family: 'BM HANNA', '배달의민족 한나', sans-serif;
             margin: 0 0 30px 0;
-            font-size: 18px;
-            font-weight: 200;
+            font-size: 16px;
+            font-weight: 600;
         }
         span, li {
-            font-family: 'BM JUA', '배달의민족 주아', sans-serif;
+            //font-family: 'BM JUA', '배달의민족 주아', sans-serif;
             padding: 4px 0;
-            font-size: 16px;
-            font-weight: 100;
+            font-size: 14px;
+            font-weight: 200;
         }
         &:not(:last-child):after {
             display: block;
@@ -70,16 +70,16 @@
         border-radius: 2px;
         background: #fff;
         h2 {
-            font-family: 'BM JUA', '배달의민족 주아', sans-serif;
+            //font-family: 'BM JUA', '배달의민족 주아', sans-serif;
             margin: 0 0 10px 0;
-            font-size: 18px;
-            font-weight: 200;
+            font-size: 16px;
+            font-weight: 600;
         }
         span, li {
-            font-family: 'BM JUA', '배달의민족 주아', sans-serif;
+            //font-family: 'BM JUA', '배달의민족 주아', sans-serif;
             padding: 4px 0;
-            font-size: 16px;
-            font-weight: 100;
+            font-size: 14px;
+            font-weight: 200;
         }
         @media (max-width: 400px) {
             position: relative;

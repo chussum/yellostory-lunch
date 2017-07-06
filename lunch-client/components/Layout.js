@@ -51,6 +51,7 @@ class Layout extends React.Component {
             <div className={ className }>
                 <Head>
                     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"/>
                     <link rel="stylesheet" type="text/css" href={'/assets/' + Package.version + '/antd.min.css'} />
                     {stylesheet}
                     <title>Lunch Site{ title ? ` - ${title}` : '' }</title>
