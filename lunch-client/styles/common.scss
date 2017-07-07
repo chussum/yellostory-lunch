@@ -36,7 +36,11 @@ body {
     right: 30px;
     bottom: 30px;
     .ant-back-top-content {
-        background-color: #000; //#1CB9D0;
+        background-color: #000;
+    }
+    @media (max-width: 400px) {
+        right: 16px;
+        bottom: 16px;
     }
 }
 

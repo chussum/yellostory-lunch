@@ -32,7 +32,7 @@ class Layout extends React.Component {
                     { children }
                 </div>
             )
-        } else {
+        } else if (pathname === '/') {
             layout = (
                 <div className="home">
                     <div className="bg-pasta">
@@ -45,6 +45,8 @@ class Layout extends React.Component {
                     </div>
                 </div>
             )
+        } else {
+            layout = (<div></div>)
         }
 
         return (
