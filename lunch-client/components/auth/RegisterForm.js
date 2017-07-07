@@ -2,7 +2,7 @@ import React from 'react'
 import autobind from 'autobind-decorator'
 import { nextConnect } from 'next/connect'
 import { registerUser, loginUser } from 'actions/authenticate'
-import { Form, Input, Tooltip, Icon, Checkbox, Button, notification } from 'antd'
+import { Form, Input, Checkbox, Button, notification } from 'antd'
 
 const FormItem = Form.Item
 
@@ -152,7 +152,7 @@ class LoginForm extends React.Component {
                     {...formItemLayout}
                     label={(
                         <span>
-                            닉네임&nbsp;<Tooltip title="What do you want other to call you?"><Icon type="question-circle-o" /></Tooltip>
+                            닉네임
                         </span>
                     )}
                     hasFeedback

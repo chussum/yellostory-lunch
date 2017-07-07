@@ -52,7 +52,7 @@
                 text-align: center;
                 font-size: 14px;
                 line-height: 40px;
-                font-weight: 600;
+                font-weight: 500;
                 color: #000;
                 text-decoration: none;
                 &:hover {
@@ -73,8 +73,9 @@
         .welcome {
             margin: 0 10px;
             font-size: 14px;
+            font-weight: 200;
             strong {
-                font-weight: bold;
+                font-weight: 500;
             }
             @media (max-width: 720px) {
                 display: none;

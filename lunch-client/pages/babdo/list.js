@@ -135,12 +135,12 @@ class BabdoList extends Page {
                                 }}>
                                     { date.format('D') } <strong>{ this.week[date.format('d')] }</strong>
                                 </span>
-                                <div className="foods" onClick={ () => this.showFoodsModal(date) }>
+                                <ul className="foods" onClick={ () => this.showFoodsModal(date) }>
                                     { items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods.split('\n').map((item, key) => {
                                         if (!item) return
-                                        return (<span key={key}>{item}<br/></span>)
+                                        return (<li key={key}>{item}</li>)
                                     }) }
-                                </div>
+                                </ul>
                             </div>
                         )}
                     />
