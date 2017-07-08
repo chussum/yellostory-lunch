@@ -71,7 +71,6 @@ app.prepare()
             }, req.params))
         })
         server.get('/babdo', (req, res) => {
-            lodash.assign()
             return app.render(req, res, '/foods/list', Object.assign({
                 category: '밥도',
             }, req.params))

@@ -23,6 +23,9 @@
     position: absolute;
     top: 0;
     min-width: 40px;
+    .anticon {
+        font-size: 10px;
+    }
 
     &.calendar-header-left {
         left: 0;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import createDateObjects from './createDateObjects'
 import moment from 'moment'
 import 'moment/locale/ko'
-import { Button } from 'antd'
+import { Button, Icon } from 'antd'
 
 export default class Calendar extends React.Component {
     static propTypes = {
@@ -62,12 +62,16 @@ export default class Calendar extends React.Component {
         return (
             <div className="calendar">
                 <div className="calendar-header">
-                    <Button className="calendar-header-left" onClick={this.handlePrevMonth}>«</Button>
+                    <Button className="calendar-header-left" onClick={this.handlePrevMonth}>
+                        <Icon type="double-left" />
+                    </Button>
                     <div className="calendar-header-currentDate">
                         { this.props.title && this.props.title + ' ' } {date.format('MMMM 식단표 (YYYY년도)') }
                     </div>
                     <Button className="calendar-header-today" onClick={ this.handleTodayMonth }>오늘</Button>
-                    <Button className="calendar-header-right" onClick={ this.handleNextMonth }>»</Button>
+                    <Button className="calendar-header-right" onClick={ this.handleNextMonth }>
+                        <Icon type="double-right" />
+                    </Button>
                 </div>
                 <div className="calendar-grid">
                     <div className="calendar-grid-item title">일</div>
