@@ -5,30 +5,27 @@ import Header from './Header'
 import LoginForm from 'components/auth/LoginForm'
 import { nextConnect } from 'next/connect'
 import { BackTop, Card, LocaleProvider } from 'antd'
-import koKR from 'antd/lib/locale-provider/ko_KR';
+import koKR from 'antd/lib/locale-provider/ko_KR'
+import { redirect } from 'helper/redirect'
 
 let stylesheet
 if (process.env.NODE_ENV === 'production') {
-    // In production, serve pre-built CSS file from /assets/{version}/main.css
     stylesheet = <link rel="stylesheet" type="text/css" href={'/assets/' + Package.version + '/main.min.css'}/>
 } else {
-    // In development, serve CSS inline (with live reloading) with webpack
-    // NB: Not using dangerouslySetInnerHTML will cause problems with some CSS
     stylesheet = <style dangerouslySetInnerHTML={{__html: require('styles/_main.scss')}}/>
 }
 
 @nextConnect((state) => state)
 class Layout extends React.Component {
     render() {
-        let { publicPage, className, title, pathname, authenticate: { content, authenticated } }  = this.props
+        let { publicPage, className, title, authenticate: { content, authenticated }, url: { pathname, query } }  = this.props
         let layout
-
         if (publicPage || authenticated && content) {
             let { hideHeader, children } = this.props
 
             layout = (
                 <div className="layout">
-                    { !hideHeader ? <Header pathname={ pathname } /> : '' }
+                    { !hideHeader ? <Header pathname={ pathname } query={ query } /> : '' }
                     { children }
                 </div>
             )
@@ -46,7 +43,8 @@ class Layout extends React.Component {
                 </div>
             )
         } else {
-            layout = (<div></div>)
+            typeof document !== 'undefined' && (document.location.href = '/')
+            return (<div></div>)
         }
 
         return (
@@ -58,7 +56,6 @@ class Layout extends React.Component {
                     {stylesheet}
                     <title>Lunch Site{ title ? ` - ${title}` : '' }</title>
                 </Head>
-
                 <BackTop />
                 <LocaleProvider locale={koKR}>{ layout }</LocaleProvider>
             </div>

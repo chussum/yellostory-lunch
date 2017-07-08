@@ -4,7 +4,7 @@ const express = require('express')
 const next = require('next')
 const sass = require('node-sass')
 const less = require('less')
-const fs = require('fs');
+const fs = require('fs')
 
 less.renderSync = (filepath, options) => {
     let result = { 'css': '' }
@@ -65,8 +65,17 @@ app.prepare()
         server.use('/api', (req, res) => proxy.web(req, res))
 
         // frontend custom routes
-        server.get('/woori-food', (req, res) => app.render(req, res, '/woori-food/list', req.params))
-        server.get('/babdo', (req, res) => app.render(req, res, '/babdo/list', req.params))
+        server.get('/woori-food', (req, res) => {
+            return app.render(req, res, '/foods/list', Object.assign({
+                category: '우리푸드',
+            }, req.params))
+        })
+        server.get('/babdo', (req, res) => {
+            lodash.assign()
+            return app.render(req, res, '/foods/list', Object.assign({
+                category: '밥도',
+            }, req.params))
+        })
         server.get('*', (req, res) => handle(req, res))
         server.listen(port, (err) => {
             if (err) throw err

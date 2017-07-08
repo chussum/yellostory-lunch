@@ -26,7 +26,7 @@ class Index extends Page {
 
 
     render() {
-        let { url, authenticate: { content }, today, tomorrow } = this.props
+        let { today, tomorrow } = this.props
         let todayJSX, tomorrowJSX
         if (today) {
             let date = moment(today.date)
@@ -46,7 +46,7 @@ class Index extends Page {
             todayJSX = (
                 <div className="menu">
                     <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 오늘의 점심</h2>
-                    <span>식단표가 없습니다.</span>
+                    <span className="empty">식단표가 없습니다.</span>
                 </div>
             )
         }
@@ -68,12 +68,12 @@ class Index extends Page {
             tomorrowJSX = (
                 <div className="menu">
                     <h2>{date.format('M월 D일')} ({ this.week[date.format('d')] }) 내일의 점심</h2>
-                    <span>식단표가 없습니다.</span>
+                    <span className="empty">식단표가 없습니다.</span>
                 </div>
             )
         }
         return (
-            <Layout className="home" pathname={ url.pathname }>
+            <Layout className="home" { ...this.props } >
                 <div className="container">
                     <div>
                         { todayJSX }

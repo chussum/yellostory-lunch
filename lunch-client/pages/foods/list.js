@@ -12,10 +12,9 @@ import * as lodash from 'lodash'
 const confirm = Modal.confirm
 
 @nextConnect((state) => state)
-class BabdoList extends Page {
+class FoodsList extends Page {
     week = ['일', '월', '화', '수', '목', '금', '토']
     state = {
-        category: '밥도',
         date: moment(),
         targetDate: moment(),
         visible: false,
@@ -24,11 +23,12 @@ class BabdoList extends Page {
 
     static async getInitialProps(ctx) {
         await super.getInitialProps(ctx)
+        let category = ctx.query.category
         let foods = {}
         try {
             let response = await axios.get('/lunches', {
                 params: {
-                    category: '밥도'
+                    category: category,
                 }
             })
             let items = response.data.items || []
@@ -40,7 +40,7 @@ class BabdoList extends Page {
             err.code = 'ENOENT'
             throw err
         }
-        return { items: foods }
+        return { category: category, items: foods }
     }
 
     @autobind
@@ -72,7 +72,7 @@ class BabdoList extends Page {
                 let targetDate = date.format('YYYY-MM-DD')
                 await axios.delete('/lunch', {
                     params: {
-                        category: this.state.category,
+                        category: this.props.category,
                         date: targetDate,
                     }
                 })
@@ -94,12 +94,12 @@ class BabdoList extends Page {
         try {
             let targetDate = date.format('YYYY-MM-DD')
             await axios.post('/lunch', {
-                category: this.state.category,
+                category: this.props.category,
                 date: targetDate,
                 foods: this.state.foods,
             })
             this.props.items[targetDate] = {
-                category: this.state.category,
+                category: this.props.category,
                 foods: this.state.foods
             }
             this.hideFoodsModal()
@@ -113,20 +113,21 @@ class BabdoList extends Page {
     }
 
     render() {
-        let { url, items, authenticate: { content: { admin } } } = this.props
+        let { items, authenticate: { content: { admin } } } = this.props
         return (
-            <Layout title={ this.state.category + " 식단표" } pathname={ url.pathname } publicPage={ false } hideHeader={ false }>
+            <Layout title={ this.props.category + " 식단표" } publicPage={ false } hideHeader={ false } { ...this.props }>
                 <div className="container">
                     <Calendar
-                        title={ this.state.category }
+                        title={ this.props.category }
                         onChangeMonth={ date => this.setState({ date }) }
                         date={ this.state.date }
                         onPickDate={ date => {} }
                         renderDay={ date => (
                             <div>
+                                <Icon className="edit" type="edit" onClick={ () => this.showFoodsModal(date) } />
                                 {(() => {
                                     if (items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods) {
-                                        return <Icon className="remove" type="close-square" onClick={ () => this.showConfirm(date) }/>
+                                        return <Icon className="remove" type="delete" onClick={ () => this.showConfirm(date) }/>
                                     }
                                 })()}
                                 <span className="day" style={{
@@ -135,7 +136,7 @@ class BabdoList extends Page {
                                 }}>
                                     { date.format('D') } <strong>{ this.week[date.format('d')] }</strong>
                                 </span>
-                                <ul className="foods" onClick={ () => this.showFoodsModal(date) }>
+                                <ul className="foods">
                                     { items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods.split('\n').map((item, key) => {
                                         if (!item) return
                                         return (<li key={key}>{item}</li>)
@@ -145,7 +146,7 @@ class BabdoList extends Page {
                         )}
                     />
                     <Modal
-                        title={ this.state.targetDate.format(`YYYY/MM/DD - ${this.state.category}`) }
+                        title={ this.state.targetDate.format(`YYYY/MM/DD - ${this.props.category}`) }
                         visible={ this.state.visible }
                         onOk={ () => { this.submitFoods(this.state.targetDate) } }
                         onCancel={ this.hideFoodsModal }
@@ -163,4 +164,4 @@ class BabdoList extends Page {
     }
 }
 
-export default BabdoList
+export default FoodsList

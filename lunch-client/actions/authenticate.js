@@ -1,13 +1,5 @@
 import axios from 'axios'
-import { redirect } from 'helper/redirect'
 import { READY, AUTH_USER, AUTH_ERROR, UNAUTH_USER } from 'constants/ActionTypes'
-
-const requiredLoginPathname = [
-    '/babdo',
-    '/babdo/list',
-    '/woori-food',
-    '/woori-food/list',
-]
 
 export const errorHandler = async (dispatch, error, type) => {
     let errorMessage
@@ -46,9 +38,6 @@ export const validateToken = (token, { pathname, res } = {}) => async dispatch =
         })
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
-        if (requiredLoginPathname.includes(pathname)) {
-            redirect('/', res)
-        }
     }
 }
 
@@ -77,15 +66,9 @@ export const registerUser = ({email, password, repassword, nick}) => async dispa
 }
 
 export const logoutUser = () => async dispatch => {
-    await dispatch({type: READY})
-
     try {
         await axios.get('/auth/logout')
         await dispatch({type: UNAUTH_USER})
-        let pathname = document && document.location && document.location.pathname.replace(/\/$/g,'')
-        if (requiredLoginPathname.includes(pathname)) {
-            document.location.href = '/'
-        }
     } catch (error) {
         await errorHandler(dispatch, error, AUTH_ERROR)
     }

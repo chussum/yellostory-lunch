@@ -19,7 +19,7 @@ class Template extends Page {
     render() {
         let { url } = this.props
         return (
-            <Layout title="template" pathname={ url.pathname } publicPage={ false } hideHeader={ false }>
+            <Layout title="template" publicPage={ false } hideHeader={ false } { ...this.props } >
                 <div className="container">
                     <h2>EXAMPLE</h2>
                 </div>

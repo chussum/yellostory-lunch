@@ -5,18 +5,19 @@ import { Input, Button, Icon } from 'antd'
 import { nextConnect } from 'next/connect'
 import { logoutUser } from 'actions/authenticate';
 
-const Search = Input.Search
-
 @nextConnect((state) => state)
 class Header extends React.Component {
     @autobind
     async logout() {
         await this.props.dispatch(logoutUser())
+        let pathname = document && document.location && document.location.pathname.replace(/\/$/g,'')
+        if (pathname !== '' && pathname !== '/') {
+            document.location.href = '/'
+        }
     }
 
     render() {
-        let { pathname, authenticate: { content, authenticated } } = this.props
-
+        let { pathname, query, authenticate: { content } } = this.props
         return (
             <div className="header">
                 <div className="gnb">
@@ -29,15 +30,15 @@ class Header extends React.Component {
 
                         <ul className="nav">
                             <li>
-                                <Link href="/woori-food/list" as="/woori-food">
-                                    <a className={ pathname === '/woori-food/list' && 'active' }>
+                                <Link href="/foods/list?category=우리푸드" as="/woori-food">
+                                    <a className={ pathname === '/foods/list' && query.category === '우리푸드' && 'active' }>
                                         우리푸드
                                     </a>
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/babdo/list" as="/babdo">
-                                    <a className={ pathname === '/babdo/list' && 'active' }>
+                                <Link href="/foods/list?category=밥도" as="/babdo">
+                                    <a className={ pathname === '/foods/list' && query.category === '밥도' && 'active' }>
                                         밥도
                                     </a>
                                 </Link>
