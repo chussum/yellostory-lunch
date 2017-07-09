@@ -1,9 +1,9 @@
-import express from 'express';
-import * as authenticate from './controllers/authenticate';
-import * as user from './controllers/user';
-import * as lunch from './controllers/lunch';
+import express from 'express'
+import * as authenticate from './controllers/authenticate'
+import * as user from './controllers/user'
+import * as lunch from './controllers/lunch'
 
-const router = express.Router();
+const router = express.Router()
 
 // User
 router.get('/user/:id', authenticate.auth, user.get)

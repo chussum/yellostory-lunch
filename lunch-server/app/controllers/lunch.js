@@ -3,47 +3,34 @@ import moment from 'moment'
 import { filter, split, join } from 'lodash'
 
 const dateRegex = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/
-const findTodayLunch = async () => {
-    let today = moment()
-    let day = Number(today.day())
-    let category
+const initializeCategory = (month, day) => {
+    month = Number(month)
+    day = Number(day)
 
     if ([1, 3].includes(day)) {
-        category = '우리푸드'
+        return '우리푸드'
     } else if ([2, 4].includes(day)) {
-        category = '밥도'
+        return '밥도'
     } else if (day === 5) {
-        switch (Number(today.format('M') % 2)) {
-            case 0:
-                category = '우리푸드'
-                break
-            case 1:
-                category = '밥도'
-                break
+        switch (month % 2) {
+            case 0: return '우리푸드'
+            case 1: return '밥도'
         }
     }
+}
+const findTodayLunch = async () => {
+    let today = moment()
+    let month = today.format('M')
+    let day = today.day()
+    let category = initializeCategory(month, day)
 
     return await Lunch.findLunch(category, today)
 }
 const findTomorrowLunch = async () => {
     let tomorrow = moment().add(1, 'days')
-    let day = Number(tomorrow.day())
-    let category
-
-    if ([1, 3].includes(day)) {
-        category = '우리푸드'
-    } else if ([2, 4].includes(day)) {
-        category = '밥도'
-    } else if (day === 5) {
-        switch (Number(tomorrow.format('M') % 2)) {
-            case 0:
-                category = '우리푸드'
-                break
-            case 1:
-                category = '밥도'
-                break
-        }
-    }
+    let month = tomorrow.format('M')
+    let day = tomorrow.day()
+    let category = initializeCategory(month, day)
 
     return await Lunch.findLunch(category, tomorrow)
 }
@@ -127,11 +114,11 @@ export const getMessage = async (req, res) => {
     switch (content) {
         case '오늘의 점심 메뉴': {
             lunch = await findTodayLunch()
-            break;
+            break
         }
         case '내일 점심은 뭐지?': {
             lunch = await findTomorrowLunch()
-            break;
+            break
         }
     }
     lunch && (text = kakaoAPIFormat(lunch))
@@ -169,7 +156,7 @@ export const create = async (req, res) => {
             success: false,
             code: errorCode,
             message: errorMessage,
-        });
+        })
     }
 
     let lunch = await Lunch.findLunch(category, date)
@@ -205,7 +192,7 @@ export const remove = async (req, res) => {
             success: false,
             code: errorCode,
             message: errorMessage,
-        });
+        })
     }
 
     let lunch = await Lunch.findLunch(category, date)

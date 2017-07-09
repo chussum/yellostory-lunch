@@ -15,7 +15,7 @@ const port = process.env.PORT
 // require config setting
 if (!port) {
     console.error('please rename config file and then edit the file. (.envcpy to .env)')
-    process.exit(0);
+    process.exit(0)
 }
 
 app.set('jwt-secret', process.env.SECRET_KEY)
@@ -36,13 +36,13 @@ app.use((req, res, next) => {
         return res.status(200).end()
     }
 
-    return next();
+    return next()
 })
 app.use('/', routes)
 app.use((err, req, res, next) => res.status(500).send('500 Error'))
 app.listen(port, () => console.log('> Ready on http://localhost:' + port))
 
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise
 mongoose.connect(process.env.DB_URI)
 
 db.on('error', console.error)

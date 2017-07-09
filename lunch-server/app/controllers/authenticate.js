@@ -168,7 +168,7 @@ export const auth = (req, res, next) => {
                 })
             } else {
                 req.decoded = decoded
-                next();
+                next()
             }
         })
     } else {

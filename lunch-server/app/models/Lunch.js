@@ -5,7 +5,7 @@ const Lunch = new Schema({
     date: Date,
     category: String,
     foods: String,
-});
+})
 
 // static methods
 Lunch.statics.findLunch = function(category, date) {

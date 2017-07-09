@@ -19,7 +19,7 @@ const Account = new Schema({
             access_token: String
         }
     }
-});
+})
 
 // static methods
 Account.statics.findUserByEmail = function(email) {
