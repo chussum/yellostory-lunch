@@ -3,9 +3,14 @@ import moment from 'moment'
 import { filter, split, join } from 'lodash'
 
 const dateRegex = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/
-const initializeCategory = (month, day) => {
-    month = Number(month)
-    day = Number(day)
+
+/**
+ * - 우리푸드 : 짝수달 금요일, 월,수 (1,3)
+ * - 밥도 : 홀수달 금요일, 화,목 (2,4)
+ */
+const initializeCategory = (date) => {
+    let month = Number(date.format('M'))
+    let day = Number(date.day())
 
     if ([1, 3].includes(day)) {
         return '우리푸드'
@@ -20,19 +25,18 @@ const initializeCategory = (month, day) => {
 }
 const findTodayLunch = async () => {
     let today = moment()
-    let month = today.format('M')
-    let day = today.day()
-    let category = initializeCategory(month, day)
-
+    let category = initializeCategory(today)
     return await Lunch.findLunch(category, today)
 }
 const findTomorrowLunch = async () => {
     let tomorrow = moment().add(1, 'days')
-    let month = tomorrow.format('M')
-    let day = tomorrow.day()
-    let category = initializeCategory(month, day)
-
+    let category = initializeCategory(tomorrow)
     return await Lunch.findLunch(category, tomorrow)
+}
+const findDayAfterTomorrowLunch = async () => {
+    let dayAfterTomorrow = moment().add(2, 'days')
+    let category = initializeCategory(dayAfterTomorrow)
+    return await Lunch.findLunch(category, dayAfterTomorrow)
 }
 const week = ['일', '월', '화', '수', '목', '금', '토']
 const kakaoAPIFormat = (lunch) => {
@@ -46,7 +50,7 @@ const kakaoAPIFormat = (lunch) => {
 }
 const kakaoKeyboard = {
     type: 'buttons',
-    buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?'],
+    buttons: ['오늘의 점심 메뉴', '내일 점심은 뭐지?', '모레 점심은 뭐지?'],
 }
 
 /**
@@ -75,10 +79,6 @@ export const get = async (req, res) => {
 }
 
 /**
- * - 우리푸드 : 짝수달 금요일, 월,수 (1,3)
- * - 밥도 : 홀수달 금요일, 화,목 (2,4)
- */
-/**
  * @api {get} /lunch/today 오늘의 점심
  * @apiGroup Lunch
  */
@@ -93,6 +93,15 @@ export const getTodayLunch = async (req, res) => {
  */
 export const getTomorrowLunch = async (req, res) => {
     let lunch = await findTomorrowLunch()
+    res.json(lunch)
+}
+
+/**
+ * @api {get} /lunch/day-after-tomorrow 모레의 점심
+ * @apiGroup Lunch
+ */
+export const getDayAfterTomorrowLunch = async (req, res) => {
+    let lunch = await findDayAfterTomorrowLunch()
     res.json(lunch)
 }
 
@@ -118,6 +127,10 @@ export const getMessage = async (req, res) => {
         }
         case '내일 점심은 뭐지?': {
             lunch = await findTomorrowLunch()
+            break
+        }
+        case '모레 점심은 뭐지?': {
+            lunch = await findDayAfterTomorrowLunch()
             break
         }
     }
