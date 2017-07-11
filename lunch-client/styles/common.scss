@@ -1,4 +1,4 @@
-@import 'font';
+@import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
 
 * {
     box-sizing: border-box;
@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Spoqa Han Sans', 'Sans-serif';
+    font-family: 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Noto Sans Korean', 'Sans-serif';
     height: 100%;
 
     > div:first-child {

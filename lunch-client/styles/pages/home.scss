@@ -57,7 +57,7 @@
         span, li {
             padding: 4px 0;
             font-size: 14px;
-            font-weight: 200;
+            font-weight: 300;
             &.empty {
                 display: block;
                 padding-bottom: 26px;
@@ -90,7 +90,7 @@
         span, li {
             padding: 4px 0;
             font-size: 14px;
-            font-weight: 200;
+            font-weight: 300;
         }
         @media (max-width: $mobile-width) {
             position: relative;
