@@ -31,7 +31,7 @@ export const errorHandler = async (dispatch, error, type) => {
 
 export const validateToken = (token, { pathname, res } = {}) => async dispatch => {
     try {
-        let response = await axios.post('/auth/token', { token })
+        let response = await axios.post('/auth/verify', { token })
         await dispatch({
             type: AUTH_USER,
             payload: response.data.user

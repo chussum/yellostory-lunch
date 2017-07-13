@@ -24,6 +24,6 @@ router.get('/auth/exists/email/:email', authenticate.existsEmail)
 router.post('/auth/login', authenticate.login)
 router.get('/auth/logout', authenticate.logout)
 router.post('/auth/register', authenticate.register)
-router.post('/auth/token', authenticate.validateToken)
+router.post('/auth/verify', authenticate.validateToken)
 
 export default router

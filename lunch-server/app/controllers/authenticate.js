@@ -90,7 +90,7 @@ export const logout = (req, res) => {
 }
 
 /**
- * @api {post} /auth/token validate token
+ * @api {post} /auth/verify validate token
  * @apiGroup Authenticate
  */
 export const validateToken = (req, res) => {
