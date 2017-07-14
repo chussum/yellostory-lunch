@@ -1,5 +1,7 @@
 @import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
 
+$mobile-width: 420px;
+
 * {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -38,9 +40,17 @@ body {
     .ant-back-top-content {
         background-color: #000;
     }
-    @media (max-width: 400px) {
-        right: 16px;
-        bottom: 16px;
+    @media (max-width: $mobile-width) {
+        right: 4px;
+        bottom: 4px;
+        .ant-back-top-content {
+            width: 30px;
+            height: 30px;
+            .ant-back-top-icon {
+                font-size: 16px;
+                margin-top: 6px;
+            }
+        }
     }
 }
 
@@ -48,7 +58,7 @@ body {
     box-shadow: none;
 }
 
-@media (max-width: 400px) {
+@media (max-width: $mobile-width) {
     .ant-form-item {
         margin-bottom: 10px;
 

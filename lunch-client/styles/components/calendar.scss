@@ -1,9 +1,12 @@
 .calendar {
+    $mobile-width: 420px;
+    $mobile-xs-width: 320px;
+
     .calendar-grid {
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-        @media (max-width: 420px) {
+        @media (max-width: $mobile-width) {
             border-top: 1px solid #ddd;
         }
     }
@@ -15,7 +18,7 @@
         color: #000;
         text-align: center;
         line-height: 30px;
-        @media (max-width: 420px) {
+        @media (max-width: $mobile-width) {
             font-size: 14px;
         }
     }
@@ -33,7 +36,7 @@
         }
         &.calendar-header-today {
             right: 50px;
-            @media (max-width: 320px) {
+            @media (max-width: $mobile-xs-width) {
                 display: none;
             }
         }
@@ -41,7 +44,7 @@
             right: 0;
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: $mobile-width) {
             min-width: 30px;
             padding: 0;
             &.calendar-header-today {
@@ -72,7 +75,7 @@
             background: #efefef;
             font-weight: 600;
             font-size: 14px;
-            @media (max-width: 420px) {
+            @media (max-width: $mobile-width) {
                 display: none;
             }
         }
@@ -109,7 +112,9 @@
 
     .calendar-grid-item.nextMonth,
     .calendar-grid-item.prevMonth {
-        color: #999;
+        div, span {
+            color: #999;
+        }
         @media (max-width: 420px) {
             display: none;
         }
@@ -131,7 +136,7 @@
         }
     }
 
-    @media (max-width: 420px) {
+    @media (max-width: $mobile-width) {
         .calendar-grid-item {
             border-left: 1px solid #ddd;
             .foods {
