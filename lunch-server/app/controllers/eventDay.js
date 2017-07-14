@@ -33,15 +33,18 @@ export const get = async (req, res) => {
     let prevYear = today.clone().subtract(1, 'years').format('YYYY')
     let thisYear = today.format('YYYY')
     let nextYear = today.clone().add(1, 'years').format('YYYY')
-    let items
+    let items = []
     let errorMessage
 
     try {
-        items = _.concat(
-            await getEventDays(prevYear, apiKey),
-            await getEventDays(thisYear, apiKey),
-            await getEventDays(nextYear, apiKey)
-        )
+        let response = await Promise.all([
+            getEventDays(prevYear, apiKey),
+            getEventDays(thisYear, apiKey),
+            getEventDays(nextYear, apiKey)
+        ])
+        _.forEach(response, eventDays => {
+            items = _.concat(items, eventDays)
+        })
     } catch (err) {
         errorMessage = err.response && err.response.data && err.response.data.error && err.response.data.error.message
     }
