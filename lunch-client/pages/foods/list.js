@@ -7,7 +7,7 @@ import moment from 'moment'
 import autobind from 'autobind-decorator'
 import { Icon, Modal, Input } from 'antd'
 import axios from 'axios'
-import * as _ from 'lodash'
+import * as lodash from 'lodash'
 
 const confirm = Modal.confirm
 
@@ -32,7 +32,7 @@ class FoodsList extends Page {
                 token,
             })
             let items = response.data.items || []
-            _.forEach(items, (item) => {
+            lodash.forEach(items, (item) => {
                 let date = moment(item.date).format('YYYY-MM-DD')
                 foods[date] = item
             })
@@ -42,7 +42,7 @@ class FoodsList extends Page {
             let eventDays = {}
             let response = await axios.getJson('/event-days', ctx, { token })
             let items = response.data.items || []
-            _.forEach(items, (item) => {
+            lodash.forEach(items, (item) => {
                 eventDays[item.date] = item
             })
             return eventDays
@@ -50,10 +50,8 @@ class FoodsList extends Page {
 
         try {
             let category = ctx.query.category
-            let [ foods, eventDays ] = await Promise.all([
-                getFoods(category),
-                getEventDays()
-            ])
+            let foods = await getFoods(category)
+            let eventDays = await getEventDays()
             return { category: category, items: foods, eventDays }
         } catch (err) {
             return {}
