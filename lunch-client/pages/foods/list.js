@@ -22,25 +22,40 @@ class FoodsList extends Page {
     }
 
     static async getInitialProps(ctx) {
-        await super.getInitialProps(ctx)
-        let category = ctx.query.category
-        let foods = {}
-        try {
-            let response = await axios.get('/lunches', {
+        let { token } = await super.getInitialProps(ctx)
+        let getFoods = async (category) => {
+            let foods = {}
+            let response = await axios.getJson('/lunches', ctx, {
                 params: {
                     category: category,
-                }
+                },
+                token,
             })
             let items = response.data.items || []
             lodash.forEach(items, (item) => {
                 let date = moment(item.date).format('YYYY-MM-DD')
                 foods[date] = item
             })
-        } catch (err) {
-            err.code = 'ENOENT'
-            throw err
+            return foods
         }
-        return { category: category, items: foods }
+        let getEventDays = async () => {
+            let eventDays = {}
+            let response = await axios.getJson('/event-days', ctx, { token })
+            let items = response.data.items || []
+            lodash.forEach(items, (item) => {
+                eventDays[item.date] = item
+            })
+            return eventDays
+        }
+
+        try {
+            let category = ctx.query.category
+            let foods = await getFoods(category)
+            let eventDays = await getEventDays()
+            return { category: category, items: foods, eventDays }
+        } catch (err) {
+            return {}
+        }
     }
 
     @autobind
@@ -113,7 +128,7 @@ class FoodsList extends Page {
     }
 
     render() {
-        let { items, authenticate: { content: { admin } } } = this.props
+        let { items, eventDays, authenticate: { content: { admin } } } = this.props
         return (
             <Layout title={ this.props.category + " 식단표" } publicPage={ false } hideHeader={ false } { ...this.props }>
                 <div className="container">
@@ -122,29 +137,52 @@ class FoodsList extends Page {
                         onChangeMonth={ date => this.setState({ date }) }
                         date={ this.state.date }
                         onPickDate={ date => {} }
-                        renderDay={ date => (
-                            <div>
-                                <Icon className="edit" type="edit" onClick={ () => this.showFoodsModal(date) } />
-                                {(() => {
-                                    if (items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods) {
-                                        return <Icon className="remove" type="delete" onClick={ () => this.showConfirm(date) }/>
-                                    }
-                                })()}
-                                <span className="day" style={{
-                                    fontWeight: date.isSame(moment(), 'day') ? 700 : 400,
-                                    fontSize: date.isSame(moment(), 'day') ? 22 : 16,
-                                }}>
-                                    { date.format('D') } <strong>{ this.week[date.format('d')] }</strong>
-                                </span>
+                        renderDay={ date => {
+                            let dateYmd = date.format('YYYY-MM-DD')
+                            let dayOfWeek = Number(date.format('d'))
+                            let isEventDay = [0, 6].indexOf(dayOfWeek) !== -1 ? true : false
+                            let managementArea
+                            let menuArea
+
+                            if (eventDays && eventDays[dateYmd]) {
+                                isEventDay = true
+                                menuArea = <span className="event-day name">{ eventDays[dateYmd].name }</span>
+                            } else if (items[dateYmd] && items[dateYmd].foods) {
+                                managementArea = (
+                                    <div>
+                                        <Icon className="edit" type="edit" onClick={ () => this.showFoodsModal(date) } />
+                                        <Icon className="remove" type="delete" onClick={ () => this.showConfirm(date) }/>
+                                    </div>
+                                )
+                            } else if (!isEventDay) {
+                                managementArea = <Icon className="edit" type="edit" onClick={ () => this.showFoodsModal(date) } />
+                            }
+
+                            !menuArea && (menuArea = (
                                 <ul className="foods">
-                                    { items[date.format('YYYY-MM-DD')] && items[date.format('YYYY-MM-DD')].foods.split('\n').map((item, key) => {
+                                    { items[dateYmd] && items[dateYmd].foods.split('\n').map((item, key) => {
                                         if (!item) return
                                         return (<li key={key}>{item}</li>)
                                     }) }
                                 </ul>
-                            </div>
-                        )}
+                            ))
+
+                            return (
+                                <div>
+                                    <span className={ isEventDay ? 'day event-day' : 'day' } style={{
+                                        fontWeight: date.isSame(moment(), 'day') ? 700 : 400,
+                                        fontSize: date.isSame(moment(), 'day') ? 22 : 16,
+                                    }}>
+                                        { date.format('D') } <strong>{ this.week[dayOfWeek] }</strong>
+                                    </span>
+
+                                    { managementArea }
+                                    { menuArea }
+                                </div>
+                            )}
+                        }
                     />
+
                     <Modal
                         title={ this.state.targetDate.format(`YYYY/MM/DD - ${this.props.category}`) }
                         visible={ this.state.visible }

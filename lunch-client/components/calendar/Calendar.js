@@ -74,13 +74,13 @@ export default class Calendar extends React.Component {
                     </Button>
                 </div>
                 <div className="calendar-grid">
-                    <div className="calendar-grid-item title">일</div>
+                    <div className="calendar-grid-item title event-day">일</div>
                     <div className="calendar-grid-item title">월</div>
                     <div className="calendar-grid-item title">화</div>
                     <div className="calendar-grid-item title">수</div>
                     <div className="calendar-grid-item title">목</div>
                     <div className="calendar-grid-item title">금</div>
-                    <div className="calendar-grid-item title">토</div>
+                    <div className="calendar-grid-item title event-day">토</div>
 
                     {createDateObjects(date, weekOffset).map((day, i) => (
                         <div
