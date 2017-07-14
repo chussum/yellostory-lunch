@@ -21,7 +21,7 @@ router.post('/lunch', authenticate.auth, lunch.create)
 router.delete('/lunch', authenticate.auth, lunch.remove)
 
 // Event Day
-router.get('/event-days', eventDay.get)
+router.get('/event-days', authenticate.auth, eventDay.get)
 
 // Authenticate
 router.get('/auth/exists/email/:email', authenticate.existsEmail)

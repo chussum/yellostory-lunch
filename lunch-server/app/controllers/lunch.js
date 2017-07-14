@@ -72,7 +72,7 @@ export const get = async (req, res) => {
     }
 
     let lunches = await Lunch.findAllLunch(category, startDate, endDate)
-    res.json({
+    res.status(200).json({
         success: true,
         items: lunches,
     })
@@ -84,7 +84,7 @@ export const get = async (req, res) => {
  */
 export const getTodayLunch = async (req, res) => {
     let lunch = await findTodayLunch()
-    res.json(lunch)
+    res.status(200).json(lunch)
 }
 
 /**
@@ -93,7 +93,7 @@ export const getTodayLunch = async (req, res) => {
  */
 export const getTomorrowLunch = async (req, res) => {
     let lunch = await findTomorrowLunch()
-    res.json(lunch)
+    res.status(200).json(lunch)
 }
 
 /**
@@ -102,7 +102,7 @@ export const getTomorrowLunch = async (req, res) => {
  */
 export const getDayAfterTomorrowLunch = async (req, res) => {
     let lunch = await findDayAfterTomorrowLunch()
-    res.json(lunch)
+    res.status(200).json(lunch)
 }
 
 /**

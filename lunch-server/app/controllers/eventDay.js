@@ -65,7 +65,7 @@ export const get = async (req, res) => {
             message: errorMessage,
         });
     } else {
-        res.json({
+        res.status(200).json({
             success: true,
             items: items,
         })
