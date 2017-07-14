@@ -146,7 +146,7 @@ class FoodsList extends Page {
 
                             if (eventDays && eventDays[dateYmd]) {
                                 isEventDay = true
-                                menuArea = <span className="event-day name">{ eventDays[dateYmd].name }</span>
+                                menuArea = <div className="event-day name">{ eventDays[dateYmd].name }</div>
                             } else if (items[dateYmd] && items[dateYmd].foods) {
                                 managementArea = (
                                     <div>
