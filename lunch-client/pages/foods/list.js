@@ -50,12 +50,10 @@ class FoodsList extends Page {
 
         try {
             let category = ctx.query.category
-            let response = await Promise.all([
+            let [ foods, eventDays ] = await Promise.all([
                 getFoods(category),
                 getEventDays()
             ])
-            let foods = _.first(response)
-            let eventDays = _.last(response)
             return { category: category, items: foods, eventDays }
         } catch (err) {
             return {}
