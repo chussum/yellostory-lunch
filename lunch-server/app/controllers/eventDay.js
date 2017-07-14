@@ -3,6 +3,8 @@ import moment from 'moment'
 import * as _ from 'lodash'
 
 const getEventDays = async (year, key) => {
+    if (year < 2017) return []
+
     let items
     let response = await axios.get('https://apis.sktelecom.com/v1/eventday/days', {
         headers: {
@@ -14,12 +16,20 @@ const getEventDays = async (year, key) => {
         }
     })
     items = response.data ? response.data.results : []
+    items.push({
+        year: year,
+        month: '05',
+        day: '01',
+        type: 'a',
+        name: '근로자의 날',
+    })
     items = _.map(items, item => {
         return {
             date: item.year + '-' + item.month + '-' + item.day,
             ...item,
         }
     })
+
     return items
 }
 
