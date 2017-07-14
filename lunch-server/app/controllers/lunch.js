@@ -45,7 +45,7 @@ const kakaoAPIFormat = (lunch) => {
     }
     let foods = split(lunch.foods, '\n')
     let date = moment(lunch.date)
-    let subject = `${date.format('M월 D일')} (${week[date.format('d')]}) / ${lunch.category}`
+    let subject = `${date.format('M월 D일')} (${week[date.format('d')]})` + (lunch.category ? ' / ' + lunch.category : '')
     return subject + '\n\n' + join(filter(foods, (title) => title.trim() != ''), '\n')
 }
 const kakaoKeyboard = {
@@ -114,34 +114,60 @@ export const getKeyboard = async (req, res) => {
 }
 
 /**
- * @api {get} /lunch/message 카카오톡 API, MESSAGE
+ * @api {post} /lunch/message 카카오톡 API, MESSAGE
  * @apiGroup Lunch
  */
 export const getMessage = async (req, res) => {
     let content = req.body.content
-    let lunch, text, message_button
+    let type, lunch, text, message_button
+    let today = moment()
+    let dayOfWeek
     switch (content) {
         case '오늘의 점심 메뉴': {
+            type = '오늘'
             lunch = await findTodayLunch()
+            dayOfWeek = Number(today.format('d'))
             break
         }
         case '내일 점심은 뭐지?': {
+            type = '내일'
             lunch = await findTomorrowLunch()
+            dayOfWeek = Number(today.add(1, 'days').format('d'))
             break
         }
         case '모레 점심은 뭐지?': {
+            type = '모레'
             lunch = await findDayAfterTomorrowLunch()
+            dayOfWeek = Number(today.add(2, 'days').format('d'))
             break
         }
     }
     lunch && (text = kakaoAPIFormat(lunch))
-    if (!text) {
+    if (text) {
+        return res.json({
+            message: {
+                text,
+            },
+            keyboard: kakaoKeyboard,
+        })
+    }
+
+    let thisYear = today.format('YYYY')
+    let targetYmd = today.format('YYYY-MM-DD')
+    let eventDays = req.app.get('event-days')
+    if (eventDays[thisYear] && eventDays[thisYear].items[targetYmd]) {
+        let item = eventDays[thisYear].items[targetYmd]
+        text = type + '은(는) ' + item.name + '이예요~'
+    } else if ([0, 6].indexOf(dayOfWeek) !== -1) {
+        text = type + '은(는) 기다리던 주말!'
+    } else {
         text = '식단표가 없어요!\n식단표 등록에 힘이 되어주세요!'
         message_button = {
             label: '식단표 등록해주기',
             url: 'http://lunch.hyungdew.com',
         }
     }
+
     res.json({
         message: {
             text,

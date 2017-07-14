@@ -2,8 +2,13 @@ import axios from 'axios'
 import moment from 'moment'
 import * as _ from 'lodash'
 
-const getEventDays = async (year, key) => {
+const getEventDays = async (eventDays, year, key) => {
     if (year < 2017) return []
+
+    let today = moment()
+    if (eventDays[year] && today.diff(eventDays[year].updatedAt, 'months') < 1) {
+        return eventDays[year].items
+    }
 
     let items
     let response = await axios.get('https://apis.sktelecom.com/v1/eventday/days', {
@@ -29,6 +34,10 @@ const getEventDays = async (year, key) => {
             ...item,
         }
     })
+    eventDays[year] = {
+        updatedAt: today,
+        items,
+    }
 
     return items
 }
@@ -39,6 +48,7 @@ const getEventDays = async (year, key) => {
  */
 export const get = async (req, res) => {
     let apiKey = req.app.get('skt-api-key')
+    let eventDays = req.app.get('event-days')
     let today = moment()
     let prevYear = today.clone().subtract(1, 'years').format('YYYY')
     let thisYear = today.format('YYYY')
@@ -48,9 +58,9 @@ export const get = async (req, res) => {
 
     try {
         let response = await Promise.all([
-            getEventDays(prevYear, apiKey),
-            getEventDays(thisYear, apiKey),
-            getEventDays(nextYear, apiKey)
+            getEventDays(eventDays, prevYear, apiKey),
+            getEventDays(eventDays, thisYear, apiKey),
+            getEventDays(eventDays, nextYear, apiKey)
         ])
         _.forEach(response, eventDays => {
             items = _.concat(items, eventDays)

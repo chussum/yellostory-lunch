@@ -20,6 +20,7 @@ if (!port) {
 
 app.set('jwt-secret', process.env.SECRET_KEY)
 app.set('skt-api-key', process.env.SKT_API_KEY)
+app.set('event-days', {})
 
 if (dev) {
     app.use('/', express.static(path.join(__dirname, '..', 'doc')))
